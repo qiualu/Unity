@@ -5,8 +5,8 @@ using UnityEngine;
 //public class 地板鼠标交互类 : MonoBehaviour
 //using UnityEngine;
 //using System.Collections;
-
-public class 地板鼠标交互类 : MonoBehaviour
+/**
+public class 地板鼠标交互类21 : MonoBehaviour
 {
 
     public GameObject 地板元素;  // 缩短名称
@@ -21,9 +21,9 @@ public class 地板鼠标交互类 : MonoBehaviour
     private Vector3 原始缩放保持;
 
     // 悬停时的目标缩放倍数
-    public float 悬停缩放 = 1.0f;
+    public float 悬停缩放 = 0.85f;
     // 点击时的目标缩放倍数
-    public float 点击缩放 = 1.05f;
+    public float 点击缩放 = 0.95f;
     // 缩放过渡速度（数值越大越快）
     public float 过渡速度 = 10f;
 
@@ -46,29 +46,11 @@ public class 地板鼠标交互类 : MonoBehaviour
 
     private bool 显示状态 = false;
 
-    private int 地板状态 = 0;
-
-
-    //地板显示变量相关
-    // 地板状态枚举
-    private enum 地板状态类型
-    {
-        直接隐藏,   // 0
-        淡入显示,   // 1
-        淡出隐藏,   // 2
-        直接显示,   // 3
-        等待结束    // 8
-    }
-    private 地板状态类型 内部状态 = 地板状态类型.直接隐藏;
-
-
+     
     private Color 原始颜色;  // 保存原始颜色
     private Coroutine 当前动画协程;  // 当前运行的动画协程
     private Coroutine 过渡协程;  // 当前运行的动画协程
     private Coroutine 淡出过渡计时协程;  // 当前运行的动画协程
-
-    private Coroutine 显示地板过渡协程; // 单函数执行 淡入淡出
-
     private Coroutine 缩放协程;
 
     public int 地板id = -1;
@@ -112,8 +94,8 @@ public class 地板鼠标交互类 : MonoBehaviour
         }
         //播放淡出动画();
         // 提前隐藏
-        //直接隐藏();
-        显示地板();
+        直接隐藏();
+
     }
 
     // 鼠标进入地板范围时
@@ -153,8 +135,7 @@ public class 地板鼠标交互类 : MonoBehaviour
             //关卡加载器.关卡加载实例.记录点击位置(this);
         }
 
-        //切换显示状态();
-        显示地板(1);
+        切换显示状态();
     }
 
     // 鼠标松开时
@@ -241,161 +222,14 @@ public class 地板鼠标交互类 : MonoBehaviour
         过渡协程 = StartCoroutine(执行过渡());
     }
 
- 
-
-    //地板状态
-    public void 显示地板(int 输入状态 = 0) {
-
-        //Debug.Log($" 地板状态 : {输入状态} ");
-
-        // 1. 直接隐藏（无过渡）
-        if (输入状态 == 0)
-        {
-            Color 当前颜色 = 地板材质实例.color;
-            当前颜色.a = 0.0f;
-            地板材质实例.color = 当前颜色;
-            //内部状态 = 地板状态类型.直接隐藏;
-            过渡值 = 0.0f;
-            内部状态 = 地板状态类型.等待结束;
-            return;
-        }
-
-        // 2. 直接显示（无过渡）
-        if (输入状态 == 3)
-        {
-            Color 当前颜色 = 地板材质实例.color;
-            当前颜色.a = 1.0f;
-            地板材质实例.color = 当前颜色;
-            //内部状态 = 地板状态类型.直接显示;
-            内部状态 = 地板状态类型.等待结束;
-            过渡值 = 1.0f;
-            return;
-        }
-
-        // 3. 淡入显示
-        if (输入状态 == 1)
-        {
-            //Debug.Log($" 地板状态 输入状态 : {输入状态}  {内部状态} ");
-
-            if (内部状态 == 地板状态类型.等待结束)
-            {
-                内部状态 = 地板状态类型.淡入显示;
-                自动淡出计时 = 0.0f;
-                if (显示地板过渡协程 != null)
-                {
-                    StopCoroutine(显示地板过渡协程);
-                    显示地板过渡协程 = null;
-                }
-                //Debug.Log($" 地板状态 显示地板过渡 : {显示地板过渡协程}   ");
-
-                显示地板过渡协程 = StartCoroutine(显示地板过渡());
-            }
-            else {
-                内部状态 = 地板状态类型.淡入显示;
-                自动淡出计时 = 0.0f;
-            }
-            return;
-        }
-
-        // 4. 淡出隐藏
-        if (输入状态 == 2)
-        {
-
-            if (内部状态 == 地板状态类型.等待结束)
-            {
-                内部状态 = 地板状态类型.淡出隐藏;
-                自动淡出计时 = 0.0f;
-                if (显示地板过渡协程 != null)
-                {
-                    StopCoroutine(显示地板过渡协程);
-                    显示地板过渡协程 = null;
-                }
-                显示地板过渡协程 = StartCoroutine(显示地板过渡());
-            }
-            else
-            {
-                内部状态 = 地板状态类型.淡出隐藏;
-                自动淡出计时 = 0.0f;
-            }
- 
-            return;
-        }
-
-        
-    }
-
-    //淡入协程
-    private IEnumerator 显示地板过渡()
+    public void 直接隐藏()
     {
-        while (true)
-        {
-            // 根据当前状态设置目标值
-            float 目标值 = 0;
-            if (内部状态 == 地板状态类型.淡入显示) 目标值 = 淡入值;
-            if (内部状态 == 地板状态类型.淡出隐藏) 目标值 = 淡出值;
-
-
-
-
-            // 更新过渡值
-            过渡值 = Mathf.MoveTowards(过渡值, 目标值, 过渡颜色速度 * Time.deltaTime);
-            // 应用过渡值到材质
-            if (地板材质实例 != null)
-            {
-                Color 当前颜色 = 地板材质实例.color;
-                当前颜色.a = 过渡值;
-                地板材质实例.color = 当前颜色;
-            }
-            //Debug.Log($" 过渡值   : {过渡值} {Mathf.Abs(过渡值 - 目标值)} {自动淡出计时} 内部状态: {内部状态} ");
-            // 检查是否到达目标
-            if (Mathf.Abs(过渡值 - 目标值) < 0.01f)
-            {
-                // 淡入完成后进入等待状态
-                if (内部状态 == 地板状态类型.淡入显示)
-                {
-
-                    // 等待自动淡出时间
-                    if (自动淡出计时 < 自动淡出时间)
-                    {
-                        自动淡出计时 += Time.deltaTime;
-                    }
-                    else
-                    {
-                        自动淡出计时 = 0.0f;
-                        内部状态 = 地板状态类型.淡出隐藏;
-                    }
-
-                }
-                else if (内部状态 == 地板状态类型.淡出隐藏)
-                {
-                    内部状态 = 地板状态类型.等待结束;
-                    // 等待自动淡出时间
-                    if (自动淡出计时 < 0.1)
-                    {
-                        自动淡出计时 += Time.deltaTime;
-                    }
-                    else
-                    {
-                        自动淡出计时 = 0.0f;
-                        内部状态 = 地板状态类型.等待结束;
-                        break;
-                    }
-
-                }
-                else {
-                    内部状态 = 地板状态类型.等待结束;
-                    break;
-                }
-
-            }
-
-            yield return null;
-
-
-        }
-
-
+        Color 当前颜色 = 地板材质实例.color;
+        当前颜色.a = 0.0f;
+        地板材质实例.color = 当前颜色;
     }
+
+
     //淡入协程
     private IEnumerator 执行过渡()
     {
@@ -462,7 +296,7 @@ public class 地板鼠标交互类 : MonoBehaviour
         // 根据目标状态确定目标值
         float 目标值 = 自动淡出时间;
         自动淡出计时 = 0.0f;
-        // 循环直到过渡值接近目标值 自动淡出计时 < 自动淡出时间
+        // 循环直到过渡值接近目标值
         //Debug.Log($"淡出过渡计时  地板id: {地板id}  目标值:{目标值} 自动淡出计时:{自动淡出计时}  ");
         while (自动淡出计时 < 目标值 )
         {
@@ -488,10 +322,11 @@ public class 地板鼠标交互类 : MonoBehaviour
         {
             StopCoroutine(缩放协程);
         }
-        显示地板(0);
+        直接隐藏();
     }
 
 
 }
 
 
+**/
