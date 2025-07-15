@@ -1,0 +1,57 @@
+
+
+**/参考资料/
+**/test/
+**/存档/
+
+/LearnDemo
+/Hello
+/3DTanks
+/3DTanksBatt 
+/Card
+/Hello
+ 
+ # Unity自动生成目录
+**/[Ll]ibrary/
+**/[Tt]emp/
+**/[Oo]bj/
+**[Bb]uild/
+**/[Bb]uilds/
+**/[Ll]ogs/
+**/[Mm]emoryCaptures/
+**/[Rr]ecordings/
+
+# IDE和工具缓存
+.vs/
+.gradle/
+.idea/
+*.sln
+*.suo
+*.userprefs
+
+# 二进制文件（规避LFS依赖）
+*.assetbundle
+*.unitypackage
+*.apk
+*.aab
+*.exe
+*.dll
+*.so
+*.bundle
+
+
+# 手动指定大文件类型（示例）
+*.psd
+*.fbx
+*.wav
+*.mp4
+*.zip
+*/Assets/Textures/*.tga
+*/Assets/Audio/*.ogg 
+
+# 通用压缩包过滤
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.gz
