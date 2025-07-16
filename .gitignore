@@ -41,13 +41,13 @@
 
 
 # 手动指定大文件类型（示例）
-*.psd
-*.fbx
-*.wav
-*.mp4
-*.zip
-*/Assets/Textures/*.tga
-*/Assets/Audio/*.ogg 
+# *.psd
+# *.fbx
+# *.wav
+# *.mp4
+# *.zip
+# */Assets/Textures/*.tga
+# */Assets/Audio/*.ogg 
 
 # 通用压缩包过滤
 *.zip
