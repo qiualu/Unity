@@ -481,7 +481,11 @@ private enum 地板状态类型
     等待结束    // 8
 }
 
-
+    public int 怪物等级;
+    public int 剩余饼干;
+    public int 剩余牛奶;
+    public int 怪物ID;
+}
 
 
  * *******/
