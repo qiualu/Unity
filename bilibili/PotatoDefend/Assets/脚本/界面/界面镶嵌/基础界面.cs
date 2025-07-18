@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface 基础界面
+public interface 基础界面 // IBasePanel
 {
     // 初始化面板
     void 初始化面板();  // InitPanel()
@@ -16,3 +16,6 @@ public interface 基础界面
     // 更新面板（每帧刷新逻辑）
     void 更新面板();  // UpdatePanel()
 }
+
+
+

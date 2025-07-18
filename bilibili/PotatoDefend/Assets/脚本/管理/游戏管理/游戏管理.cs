@@ -36,7 +36,6 @@ public class 游戏管理 : MonoBehaviour  // GameManager : MonoBehaviour
         是否重置玩家数据 = true;
 
 
-
         DontDestroyOnLoad(gameObject);
         _实例 = this;  // _instance = this;
         玩家管理 = new 玩家管理器();  // playerManager = new PlayerManager();
@@ -47,8 +46,7 @@ public class 游戏管理 : MonoBehaviour  // GameManager : MonoBehaviour
         工厂管理 = new 工厂管理器();  // factoryManager = new FactoryManager();
         音频源管理 = new 音频源管理器();  // audioSourceManager = new AudioSourceManager();
         界面管理 = new 界面管理器();  // uiManager = new UIManager();
-        //界面管理.界面外观.当前场景状态.进入场景();  // uiManager.mUIFacade.currentSceneState.EnterScene();
-
+        界面管理.界面外观实例.当前场景状态.进入场景();  // uiManager.mUIFacade.currentSceneState.EnterScene();
 
     }
 

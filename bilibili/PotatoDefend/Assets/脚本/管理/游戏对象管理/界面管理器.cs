@@ -16,7 +16,7 @@ public class 界面管理器  // UIManager
         游戏管理实例 = 游戏管理.实例;  // mGameManager = GameManager.Instance;
         当前场景面板字典 = new Dictionary<string, GameObject>();  // currentScenePanelDict = new Dictionary<string, GameObject>();
         界面外观实例 = new 界面外观(this);  // mUIFacade = new UIFacade(this);
-        //界面外观实例.当前场景状态 = new 开始加载场景状态(界面外观实例);  // mUIFacade.currentSceneState = new StartLoadSceneState(mUIFacade);
+        界面外观实例.当前场景状态 = new 开始加载场景状态(界面外观实例);  // mUIFacade.currentSceneState = new StartLoadSceneState(mUIFacade);
     }
 
     // 将UIPanel放回工厂

@@ -25,7 +25,8 @@ public class 基础工厂类 : 基础工厂基类  // IBaseFacotry
 
     public 基础工厂类()
     {
-        加载路径 = "Prefabs/";
+        //加载路径 = "Prefabs/";
+        加载路径 = "预制体/";
     }
  
     // 放入池子
@@ -47,6 +48,7 @@ public class 基础工厂类 : 基础工厂基类  // IBaseFacotry
     // 取实例
     public GameObject 获取物品(string 物品名称)  // GetItem(string itemName)
     {
+        Debug.Log($"获取物品 : { 物品名称 }");  // Debug.Log("当前字典没有"+itemName+"的栈");
         GameObject 物品对象 = null;  // GameObject itemGo = null;
         if (对象池字典.ContainsKey(物品名称))  // if (objectPoolDict.ContainsKey(itemName))//包含此对象池
         {
@@ -81,6 +83,9 @@ public class 基础工厂类 : 基础工厂基类  // IBaseFacotry
     {
         GameObject 物品资源 = null;  // GameObject itemGo = null;
         string 物品加载路径 = 加载路径 + 物品名称;  // string itemLoadPath = loadPath + itemName;
+
+        Debug.Log($" ** 获取资源 ：{加载路径} ");  // Debug.Log("失败路径："+itemLoadPath);
+
         if (工厂字典.ContainsKey(物品名称))  // if (facotryDict.ContainsKey(itemName))
         {
             物品资源 = 工厂字典[物品名称];  // itemGo = facotryDict[itemName];

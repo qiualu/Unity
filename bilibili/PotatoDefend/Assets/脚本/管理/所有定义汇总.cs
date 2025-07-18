@@ -47,11 +47,169 @@ public class 所有定义汇总
     public int 总回合数;  // 原 mTotalRound;//一共几波怪
 
 
+ 
+    public const string 开始加载面板 = "开始加载面板"; // 原：StartLoadPanel
+    public const string 主面板 = "主面板"; // 原：MainPanel
+    public const string 设置面板 = "设置面板"; // 原：SetPanel
+    public const string 游戏加载面板 = "游戏加载面板"; // 原：GameLoadPanel
+    public const string 帮助面板 = "帮助面板"; // 原：HelpPanel
+    public const string 游戏普通选项面板 = "游戏普通选项面板"; // 原：GameNormalOptionPanel
+    public const string 游戏普通大关卡面板 = "游戏普通大关卡面板"; // 原：GameNormalBigLevelPanel
+    public const string 游戏普通关卡面板 = "游戏普通关卡面板"; // 原：GameNormalLevelPanel
+    public const string 游戏Boss选项面板 = "游戏Boss选项面板"; // 原：GameBossOptionPanel
+    public const string 普通模式面板 = "普通模式面板"; // 原：NormalModelPanel
+    public const string Boss模式面板 = "Boss模式面板"; // 原：BossModelPanel
+    public const string 怪物巢穴面板 = "怪物巢穴面板"; // 原：MonsterNestPanel
+ 
 
 
 }
 
+/*****
+ * 
 
+
+
+
+
+
+
+BasePanel
+IBasePanel 基础界面
+
+
+
+界面管理器 :   执行代码
+        界面管理 = new 界面管理器();  // uiManager = new UIManager();
+        界面管理.界面外观实例.当前场景状态.进入场景();  // uiManager.mUIFacade.currentSceneState.EnterScene();
+
+public 界面外观 界面外观实例;  // UIFacade mUIFacade;
+
+
+
+下面都是定义
+
+public class 开始加载场景状态 : 基于基础场景状态
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="界面外观">界面外观实例</param>
+    public 开始加载场景状态(界面外观 界面外观实例) : base(界面外观实例)
+    {
+
+    }
+
+    /// <summary>
+    /// 进入场景（重写父类方法）
+    /// </summary>
+    public override void 进入场景()
+    {
+        界面外观实例.向字典添加面板(字符串管理.开始加载面板);
+        base.进入场景();
+    }
+
+    /// <summary>
+    /// 退出场景（重写父类方法）
+    /// </summary>
+    public override void 退出场景()
+    {
+        base.退出场景();
+        SceneManager.LoadScene(1);
+    }
+
+     
+
+}
+
+public class 界面外观  // UIFacade
+{
+    // 管理者实例
+    private 界面管理器 界面管理器实例;  // UIManager mUIManager
+    private 游戏管理 游戏管理器实例;  // GameManager mGameManager
+    private 音频源管理器 音频源管理器实例;  // AudioSourceManager mAudioSourceManager
+    public 玩家管理器 玩家管理器实例;  // PlayerManager mPlayerManager
+
+    // UI面板字典（存储当前场景的面板接口实例）
+    public Dictionary<string, 基础界面> 当前场景面板字典 = new Dictionary<string, 基础界面>();  // Dictionary<string, IBasePanel> currentScenePanelDict
+
+    // 其他成员变量
+    private GameObject 遮罩;  // GameObject mask
+    private Image 遮罩图片;  // Image maskImage
+    public Transform 画布变换;  // Transform canvasTransform
+
+    // 场景状态（接口实例）
+    public 基础场景状态 当前场景状态;  // IBaseSceneState currentSceneState
+    public 基础场景状态 上一场景状态;  // IBaseSceneState lastSceneState
+
+    // 构造函数（接收界面管理器实例）
+    public 界面外观(界面管理器 界面管理器)  // UIFacade(UIManager uiManager)
+    {
+        游戏管理器实例 = 游戏管理.实例;  // mGameManager = GameManager.Instance
+        玩家管理器实例 = 游戏管理.实例.玩家管理;  // mPlayerManager = mGameManager.playerManager
+        界面管理器实例 = 界面管理器;  // mUIManager = uiManager
+        音频源管理器实例 = 游戏管理器实例.音频源管理;  // mAudioSourceManager = mGameManager.audioSourceManager
+        初始化遮罩();  // InitMask()
+    }
+
+    // 初始化遮罩
+    public void 初始化遮罩()  // InitMask()
+    {
+        画布变换 = GameObject.Find("Canvas").transform;  // canvasTransform = GameObject.Find("Canvas").transform
+        // 遮罩 = 游戏管理器实例.工厂管理器.工厂字典[工厂类型.界面工厂].获取物品("Img_Mask");  // 原注释逻辑保留
+        遮罩 = 创建UI并设置位置("黑屏遮罩");  // mask = CreateUIAndSetUIPosition("Img_Mask")
+        遮罩图片 = 遮罩.GetComponent<Image>();  // maskImage = mask.GetComponent<Image>()
+    }
+
+    public void 向字典添加面板(string 界面面板名称)  // AddPanelToDict(string uiPanelName)
+    {
+        Debug.Log($"向字典添加面板  { 界面面板名称 } ");  // 原日志信息翻译
+        界面管理器实例.当前场景面板字典.Add(界面面板名称, 获取游戏物体资源(工厂类型类.界面面板工厂, 界面面板名称));  // 原逻辑翻译
+    }
+
+    // 初始化当前场景所有面板并存入字典
+    public void 初始化字典()  // InitDict()
+    {
+        foreach (var 项 in 界面管理器实例.当前场景面板字典)  // foreach (var item in mUIManager.currentScenePanelDict)
+        {
+            项.Value.transform.SetParent(画布变换);  // item.Value.transform.SetParent(canvasTransform)
+            项.Value.transform.localPosition = Vector3.zero;  // 原逻辑保留
+            项.Value.transform.localScale = Vector3.one;  // 原逻辑保留
+            基础界面 基础面板 = 项.Value.GetComponent<基础界面>();  // IBasePanel basePanel = item.Value.GetComponent<IBasePanel>()
+            if (基础面板 == null)  // if (basePanel == null)
+            {
+                Debug.Log("获取面板上I基础面板脚本失败");  // 原日志信息翻译
+            }
+            基础面板.初始化面板();  // basePanel.InitPanel()
+            当前场景面板字典.Add(项.Key, 基础面板);  // currentScenePanelDict.Add(item.Key, basePanel)
+        }
+    }
+
+    // 清空UI面板字典
+    public void 清空字典()  // ClearDict()
+    {
+        当前场景面板字典.Clear();  // currentScenePanelDict.Clear()
+        界面管理器实例.清空字典();  // mUIManager.ClearDict()
+
+    }
+
+}
+
+public interface 基础场景状态 
+{
+    // 进入场景（场景切换进入时执行的逻辑）
+    void 进入场景();  // EnterScene()
+    // 退出场景（场景切换离开时执行的逻辑）
+    void 退出场景();  // ExitScene()
+}
+
+ 
+
+
+
+
+ * 
+ * *****/
 
 
 /********

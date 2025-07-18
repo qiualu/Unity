@@ -42,16 +42,16 @@ public class 界面外观  // UIFacade
     {
         画布变换 = GameObject.Find("Canvas").transform;  // canvasTransform = GameObject.Find("Canvas").transform
         // 遮罩 = 游戏管理器实例.工厂管理器.工厂字典[工厂类型.界面工厂].获取物品("Img_Mask");  // 原注释逻辑保留
-        遮罩 = 创建UI并设置位置("Img_Mask");  // mask = CreateUIAndSetUIPosition("Img_Mask")
+        遮罩 = 创建UI并设置位置("黑屏遮罩");  // mask = CreateUIAndSetUIPosition("Img_Mask")
         遮罩图片 = 遮罩.GetComponent<Image>();  // maskImage = mask.GetComponent<Image>()
     }
 
     // 切换当前场景的状态
-    public void 切换场景状态(基础场景状态 基础场景状态)  // ChangeSceneState(IBaseSceneState baseSceneState)
+    public void 切换场景状态(基础场景状态 输入基础场景状态)  // ChangeSceneState(IBaseSceneState baseSceneState)
     {
         上一场景状态 = 当前场景状态;  // lastSceneState = currentSceneState
         显示遮罩();  // ShowMask()
-        当前场景状态 = 基础场景状态;  // currentSceneState = baseSceneState
+        当前场景状态 = 输入基础场景状态;  // currentSceneState = baseSceneState
     }
 
     // 显示遮罩
@@ -80,6 +80,9 @@ public class 界面外观  // UIFacade
     // 初始化当前场景所有面板并存入字典
     public void 初始化字典()  // InitDict()
     {
+
+        Debug.Log("初始化字典 : 8888");  // 原日志信息翻译
+
         foreach (var 项 in 界面管理器实例.当前场景面板字典)  // foreach (var item in mUIManager.currentScenePanelDict)
         {
             项.Value.transform.SetParent(画布变换);  // item.Value.transform.SetParent(canvasTransform)
@@ -105,6 +108,7 @@ public class 界面外观  // UIFacade
     // 向界面管理器字典添加UI面板
     public void 向字典添加面板(string 界面面板名称)  // AddPanelToDict(string uiPanelName)
     {
+        Debug.Log($"向字典添加面板  { 界面面板名称 } ");  // 原日志信息翻译
         界面管理器实例.当前场景面板字典.Add(界面面板名称, 获取游戏物体资源(工厂类型类.界面面板工厂, 界面面板名称));  // 原逻辑翻译
     }
 
