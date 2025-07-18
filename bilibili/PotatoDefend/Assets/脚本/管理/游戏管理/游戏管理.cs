@@ -52,19 +52,14 @@ public class 游戏管理 : MonoBehaviour  // GameManager : MonoBehaviour
 
     }
 
-    //获取精灵资源
-    public Sprite GetSprite(string resourcePath)
-    {
-        //return factoryManager.spriteFactory.GetSingleResources(resourcePath);
-        return  null;
-    }
+ 
 
-    ////创建物品
-    //public GameObject 创建物品(GameObject 物品对象)  // public GameObject CreateItem(GameObject itemGo)
-    //{
-    //    GameObject 实例对象 = Instantiate(物品对象);  // GameObject go = Instantiate(itemGo);
-    //    return 实例对象;  // return go;
-    //}
+    //创建物品
+    public GameObject 创建物品(GameObject 物品对象)  // public GameObject CreateItem(GameObject itemGo)
+    {
+        GameObject 实例对象 = Instantiate(物品对象);  // GameObject go = Instantiate(itemGo);
+        return 实例对象;  // return go;
+    }
 
     //获取精灵资源
     public Sprite 获取精灵(string 资源路径)  // public Sprite GetSprite(string resourcePath)
@@ -74,26 +69,26 @@ public class 游戏管理 : MonoBehaviour  // GameManager : MonoBehaviour
     }
 
     ////获取音频片段资源
-    //public AudioClip 获取音频片段(string 资源路径)  // public AudioClip GetAudioClip(string resourcePath)
-    //{
-    //    return 工厂管理.音频片段工厂.获取单个资源(资源路径);  // return factoryManager.audioClipFactory.GetSingleResources(resourcePath);
-    //}
+    public AudioClip 获取音频片段(string 资源路径)  // public AudioClip GetAudioClip(string resourcePath)
+    {
+        return 工厂管理.音频片段工厂实例.获取单个资源(资源路径);  // return factoryManager.audioClipFactory.GetSingleResources(resourcePath);
+    }
 
-    //public RuntimeAnimatorController 获取运行时动画控制器(string 资源路径)  // public RuntimeAnimatorController GetRunTimeAnimatorController(string resourcePath)
-    //{
-    //    return 工厂管理.运行时动画控制器工厂.获取单个资源(资源路径);  // return factoryManager.runtimeAnimatorControllerFactory.GetSingleResources(resourcePath);
-    //}
+    public RuntimeAnimatorController 获取运行时动画控制器(string 资源路径)  // public RuntimeAnimatorController GetRunTimeAnimatorController(string resourcePath)
+    {
+        return 工厂管理.运行时动画控制器工厂实例.获取单个资源(资源路径);  // return factoryManager.runtimeAnimatorControllerFactory.GetSingleResources(resourcePath);
+    }
 
     ////获取游戏物体
-    //public GameObject 获取游戏物体资源(工厂类型 工厂类型, string 资源路径)  // public GameObject GetGameObjectResource(FactoryType factoryType,string resourcePath)
-    //{
-    //    return 工厂管理.工厂字典[工厂类型].获取物品(资源路径);  // return factoryManager.factoryDict[factoryType].GetItem(resourcePath);
-    //}
+    public GameObject 获取游戏物体资源(工厂类型类 工厂类型, string 资源路径)  // public GameObject GetGameObjectResource(FactoryType factoryType,string resourcePath)
+    {
+        return 工厂管理.工厂字典[工厂类型].获取物品(资源路径);  // return factoryManager.factoryDict[factoryType].GetItem(resourcePath);
+    }
 
-    ////将游戏物体放回对象池
-    //public void 推送游戏物体到工厂(工厂类型 工厂类型, string 资源路径, GameObject 物品对象)  // public void PushGameObjectToFactory(FactoryType factoryType, string resourcePath,GameObject itemGo)
-    //{
-    //    工厂管理.工厂字典[工厂类型].推送物品(资源路径, 物品对象);  // factoryManager.factoryDict[factoryType].PushItem(resourcePath,itemGo);
-    //}
+    //将游戏物体放回对象池
+    public void 将游戏物体放回对象池(工厂类型类 工厂类型, string 资源路径, GameObject 物品对象)  // public void PushGameObjectToFactory(FactoryType factoryType, string resourcePath,GameObject itemGo)
+    {
+        工厂管理.工厂字典[工厂类型].回收物品(资源路径, 物品对象);  // factoryManager.factoryDict[factoryType].PushItem(resourcePath,itemGo);
+    }
 
 }
