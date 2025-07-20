@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//     MainSceneState
 public class 主场景状态 : 基于基础场景状态
 {
     /// <summary>
@@ -18,6 +19,7 @@ public class 主场景状态 : 基于基础场景状态
     /// </summary>
     public override void 进入场景()
     {
+        Debug.Log("主场景状态.cs : 进入场景  ");
         // 向字典添加各面板（对应原AddPanelToDict）
         界面外观实例.向字典添加面板(字符串管理.主面板);
         界面外观实例.向字典添加面板(字符串管理.设置面板);
@@ -38,6 +40,7 @@ public class 主场景状态 : 基于基础场景状态
     /// </summary>
     public override void 退出场景()
     {
+        Debug.Log("主场景状态.cs : 退出场景  ");
         // 调用父类退出场景方法
         base.退出场景();
 

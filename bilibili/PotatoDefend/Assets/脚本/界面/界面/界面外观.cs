@@ -81,7 +81,7 @@ public class 界面外观  // UIFacade
     public void 初始化字典()  // InitDict()
     {
 
-        Debug.Log("初始化字典 : 8888");  // 原日志信息翻译
+        //Debug.Log("初始化字典 : 8888");  // 原日志信息翻译
 
         foreach (var 项 in 界面管理器实例.当前场景面板字典)  // foreach (var item in mUIManager.currentScenePanelDict)
         {
@@ -89,9 +89,10 @@ public class 界面外观  // UIFacade
             项.Value.transform.localPosition = Vector3.zero;  // 原逻辑保留
             项.Value.transform.localScale = Vector3.one;  // 原逻辑保留
             基础界面 基础面板 = 项.Value.GetComponent<基础界面>();  // IBasePanel basePanel = item.Value.GetComponent<IBasePanel>()
-            if (基础面板 == null)  // if (basePanel == null)
+            if (基础面板 == null)
             {
-                Debug.Log("获取面板上I基础面板脚本失败");  // 原日志信息翻译
+                // 关键修改：补充面板的Key，定位具体预制体
+                Debug.LogError("获取面板上I基础面板脚本失败！面板Key: " + 项.Key + "，请检查该预制体是否挂载了基础界面脚本");
             }
             基础面板.初始化面板();  // basePanel.InitPanel()
             当前场景面板字典.Add(项.Key, 基础面板);  // currentScenePanelDict.Add(item.Key, basePanel)
@@ -108,7 +109,7 @@ public class 界面外观  // UIFacade
     // 向界面管理器字典添加UI面板
     public void 向字典添加面板(string 界面面板名称)  // AddPanelToDict(string uiPanelName)
     {
-        Debug.Log($"向字典添加面板  { 界面面板名称 } ");  // 原日志信息翻译
+        //Debug.Log($"向字典添加面板  { 界面面板名称 } ");  // 原日志信息翻译
         界面管理器实例.当前场景面板字典.Add(界面面板名称, 获取游戏物体资源(工厂类型类.界面面板工厂, 界面面板名称));  // 原逻辑翻译
     }
 

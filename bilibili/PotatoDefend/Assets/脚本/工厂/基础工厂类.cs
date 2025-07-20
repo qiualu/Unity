@@ -48,7 +48,10 @@ public class 基础工厂类 : 基础工厂基类  // IBaseFacotry
     // 取实例
     public GameObject 获取物品(string 物品名称)  // GetItem(string itemName)
     {
-        Debug.Log($"获取物品 : { 物品名称 }");  // Debug.Log("当前字典没有"+itemName+"的栈");
+        //Debug.Log($"***** 基础工厂类: 获取物品 :   {物品名称}  ");  // Debug.Log(itemName+"的实例获取失败");
+
+
+        //Debug.Log($"获取物品 : { 物品名称 }");  // Debug.Log("当前字典没有"+itemName+"的栈");
         GameObject 物品对象 = null;  // GameObject itemGo = null;
         if (对象池字典.ContainsKey(物品名称))  // if (objectPoolDict.ContainsKey(itemName))//包含此对象池
         {
@@ -56,6 +59,7 @@ public class 基础工厂类 : 基础工厂基类  // IBaseFacotry
             {
                 GameObject 资源 = 获取资源(物品名称);  // GameObject go = GetResource(itemName);
                 物品对象 = 游戏管理.实例.创建物品(资源);  // itemGo = GameManager.Instance.CreateItem(go);
+                 
             }
             else
             {
@@ -84,7 +88,9 @@ public class 基础工厂类 : 基础工厂基类  // IBaseFacotry
         GameObject 物品资源 = null;  // GameObject itemGo = null;
         string 物品加载路径 = 加载路径 + 物品名称;  // string itemLoadPath = loadPath + itemName;
 
-        Debug.Log($" ** 获取资源 ：{加载路径} ");  // Debug.Log("失败路径："+itemLoadPath);
+        Debug.Log($"***** 基础工厂类: 物品加载路径 :   {物品加载路径}  "); 
+
+        //Debug.Log($" ** 获取资源 ：{加载路径} ");  // Debug.Log("失败路径："+itemLoadPath);
 
         if (工厂字典.ContainsKey(物品名称))  // if (facotryDict.ContainsKey(itemName))
         {

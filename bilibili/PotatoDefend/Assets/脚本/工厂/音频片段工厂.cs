@@ -15,7 +15,8 @@ public class 音频片段工厂 : 泛型资源工厂接口<AudioClip>
     protected string 加载路径;  // loadPath
 
     public 音频片段工厂()  // AudioClipFactory()
-    {
+    {   
+
         加载路径 = "AudioClips/";  // loadPath = "AudioClips/";
     }
 

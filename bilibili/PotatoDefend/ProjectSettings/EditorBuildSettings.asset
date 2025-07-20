@@ -4,5 +4,26 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: "Assets/\u573A\u666F/\u5F00\u59CB\u52A0\u8F7D\u754C\u9762.unity"
+    guid: 47b20303e9bc173488307e06d074e4fa
+  - enabled: 1
+    path: "Assets/\u573A\u666F/\u4E3B\u573A\u666F.unity"
+    guid: 616837fc621b7f343a66bf63760bdf6d
+  - enabled: 1
+    path: "Assets/\u573A\u666F/\u6E38\u620F\u666E\u901A\u9009\u9879\u573A\u666F.unity"
+    guid: 1688b877a4ad5e04c94d5f20cb793e1b
+  - enabled: 1
+    path: "Assets/\u573A\u666F/\u666E\u901A\u6A21\u5F0F\u573A\u666F.unity"
+    guid: 97bf9ba60e0a81b44932ad14f91e17c0
+  - enabled: 1
+    path: "Assets/\u573A\u666F/\u6E38\u620FBoss\u9009\u9879\u573A\u666F.unity"
+    guid: d7ef6af0818d91442a816f5ebcb9dbf7
+  - enabled: 1
+    path: "Assets/\u573A\u666F/Boss\u6A21\u5F0F\u573A\u666F.unity"
+    guid: 840ca3758aeb8394997bec9a9cf6bc1c
+  - enabled: 1
+    path: "Assets/\u573A\u666F/\u5BA0\u7269\u5DE2\u7A74\u573A\u666F.unity"
+    guid: f6c95382f04e5114baa453c5f6950ae7
   m_configObjects: {}

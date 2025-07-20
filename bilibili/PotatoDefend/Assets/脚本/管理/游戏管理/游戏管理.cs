@@ -56,6 +56,7 @@ public class 游戏管理 : MonoBehaviour  // GameManager : MonoBehaviour
     public GameObject 创建物品(GameObject 物品对象)  // public GameObject CreateItem(GameObject itemGo)
     {
         GameObject 实例对象 = Instantiate(物品对象);  // GameObject go = Instantiate(itemGo);
+ 
         return 实例对象;  // return go;
     }
 
