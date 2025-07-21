@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -18,6 +19,14 @@ public class 土豆类 : MonoBehaviour
     private Camera 主摄像机引用;
 
     //private int 切割距离 = 2;
+
+
+    [Header("分数提示预制体")]
+    private GameObject 分数预制体; // 拖拽 Canvas 预制体到这里
+    private Canvas 主Canvas; // 场景中的主Canvas（用于放置预制体）
+    public int 爆炸分数 = 1; // 炸弹爆炸的分数（负数表示扣分）
+
+     
 
     public int 分数 = 1;
 
@@ -40,13 +49,95 @@ public class 土豆类 : MonoBehaviour
         完整水果.gameObject.SetActive(true);
         切开后.gameObject.SetActive(false);
 
+
+        // 新增：按固定名称"Canvas"查找主Canvas
+        主Canvas = GameObject.Find("Canvas")?.GetComponent<Canvas>();
+        分数预制体 = Resources.Load<GameObject>("预制体/加减分");
+
+
     }
 
- 
 
+
+
+
+    ///// 实例化分数预制体并设置位置和文本
+    ///// </summary>
+    //private void 显示分数提示()
+    //{
+    //    生成分数预制体跟随鼠标();
+    //}
+
+    /// <summary>
+    /// 实例化分数预制体并设置位置和文本
+    /// </summary>
+    private void 显示分数提示()
+    {
+         
+
+        if (分数预制体 == null || 主Canvas == null)
+        {
+            Debug.LogWarning("未设置分数预制体或主Canvas！", this);
+            return;
+        }
+
+        // 1. 实例化分数预制体（作为主Canvas的子对象）
+        GameObject 分数实例 = Instantiate(分数预制体, 主Canvas.transform);
+
+        // 2. 设置分数文本（假设使用 TextMeshProUGUI）
+        TextMeshProUGUI 分数文本 = 分数实例.GetComponent<TextMeshProUGUI>();
+        if (分数文本 != null)
+        {
+            // 显示 "+分数" 或 "-分数"
+            分数文本.text = (爆炸分数 >= 0 ? "+" : "") + 爆炸分数.ToString();
+            // 可选：根据正负分设置颜色（正数绿色，负数红色）
+            分数文本.color = 爆炸分数 >= 0 ? Color.green : Color.red;
+        }
+
+        // 3. 将预制体定位到炸弹爆炸的屏幕位置
+        定位分数预制体(分数实例);
+    }
+
+    /// <summary>
+    /// 将分数预制体定位到炸弹所在的屏幕位置
+    /// </summary>
+    private void 定位分数预制体(GameObject 分数实例)
+    {
+        // a. 获取炸弹在世界空间中的位置
+        Vector3 炸弹世界位置 = transform.position;
+
+        // b. 将世界位置转换为屏幕坐标（相对于主摄像机）
+        Vector2 屏幕坐标 = 主摄像机引用.WorldToScreenPoint(炸弹世界位置);
+
+        // c. 将屏幕坐标转换为 Canvas 局部坐标
+        RectTransform canvasRect = 主Canvas.GetComponent<RectTransform>();
+        Vector2 ui坐标;
+
+        // 转换屏幕坐标到UI坐标
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            屏幕坐标,
+            主Canvas.worldCamera, // Overlay模式可传null
+            out ui坐标
+        ))
+        {
+            // d. 设置分数实例的位置
+            RectTransform 分数Rect = 分数实例.GetComponent<RectTransform>();
+            分数Rect.anchoredPosition = ui坐标;
+        }
+
+    }
+
+
+    // 碰撞到了 
     private void 切割函数(Vector3 direction, Vector3 position, float force)
     {
+
+       
         土豆忍者管理类.土豆忍者管理.计分函数(分数);
+
+
+
         土豆碰撞体.enabled = false; // 关闭碰撞体
         完整水果.SetActive(false); // 隐藏完整体
                                // 启用切好的水果
@@ -103,7 +194,17 @@ public class 土豆类 : MonoBehaviour
 
     private void 鼠标切割函数(Vector2 direction, Vector2 position, Vector3 startpos)
     {
+
+
+        爆炸分数 = 土豆忍者管理类.土豆忍者管理.连击加分;
+        分数 = 爆炸分数;
+        if (爆炸分数 > 1)
+        {
+            显示分数提示(); //  显示+分
+        }
+        Debug.Log($"爆炸分数 : {爆炸分数}！");
         土豆忍者管理类.土豆忍者管理.计分函数(分数);
+
         土豆碰撞体.enabled = false; // 关闭碰撞体
         完整水果.SetActive(false); // 隐藏完整体
                                // 启用切好的水果
@@ -321,8 +422,6 @@ public class 土豆类 : MonoBehaviour
                 开始判定();
             }
         }
-    }
-
-
+    } 
 
 }

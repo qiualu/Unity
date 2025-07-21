@@ -123,9 +123,10 @@ public class 土豆生成类 : MonoBehaviour
         while (enabled)
         {
             // 3. 随机选择水果预制体
-            GameObject prefab = 土豆组[Random.Range(0, 土豆组.Length)];
+            GameObject prefab = 土豆组[Random.Range(4, 土豆组.Length)];
 
-            //prefab = 土豆组[0];
+            //prefab = 土豆组[6];
+            //prefab = 土豆组[6];
 
 
             // 4. 随机决定是否替换为炸弹
@@ -134,7 +135,7 @@ public class 土豆生成类 : MonoBehaviour
                 prefab = 炸弹;
             }
 
-            Debug.Log($"土豆组 : {prefab.name}");
+            //Debug.Log($"土豆组 : {prefab.name}");
             // 5. 计算随机生成位置
             Vector3 position = new Vector3
             {
