@@ -154,6 +154,7 @@
     <Compile Include="Assets\CarrotFantasy\Scripts\Manager\NormalManager\UIManager.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\Game\Tower\Bullect\StarBullect.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\Game\Tower\Bullect\Bullect.cs" />
+    <Compile Include="Assets\脚本\制作界面脚本\自动缩放.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UI\CanvasDontDestoryOnLoad.cs" />
     <Compile Include="Assets\脚本\界面\界面镶嵌\游戏加载面板.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\Test\DPState.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Assets\CarrotFantasy\Scripts\Test\ObjectPool.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UI\ButtonTower.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UI\PrizePage.cs" />
+    <Compile Include="Assets\脚本\制作界面脚本\DOTween自动缩放.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

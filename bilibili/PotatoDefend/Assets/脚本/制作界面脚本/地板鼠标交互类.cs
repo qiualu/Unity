@@ -169,6 +169,10 @@ public class 地板鼠标交互类 : MonoBehaviour
 
     private void 点击显示升级() {
         // 明天处理
+        Debug.Log("协程延迟5秒后执行");
+        显示地板(1);
+
+
     }
 
 
