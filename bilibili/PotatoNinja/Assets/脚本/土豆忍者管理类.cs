@@ -13,6 +13,11 @@ public class 土豆忍者管理类 : MonoBehaviour
 
     public static 土豆忍者管理类 土豆忍者管理 { get; private set; }
 
+    // 音频管理器实例（作为管理类的子模块）
+    public 音频播放器 音频管理;
+
+
+
     [SerializeField] private 刀痕迹类 刀痕迹;
     [SerializeField] private 土豆生成类 土豆生成;
     //[SerializeField] private Text 分数;
@@ -76,6 +81,13 @@ public class 土豆忍者管理类 : MonoBehaviour
         }
         土豆忍者管理 = this;
         DontDestroyOnLoad(gameObject); // 可选：跨场景保留
+
+
+
+        // 初始化音频管理器，将其挂载到当前管理类的GameObject下
+        音频管理 = new 音频播放器(this.gameObject); 
+        // 方式2：自定义音量
+        // 音频管理 = new 音频播放器(this.gameObject, 0.3f, 0.9f); // 长音频音量0.3，片段音频音量0.9
 
 
         // 备份世界坐标
@@ -165,6 +177,10 @@ public class 土豆忍者管理类 : MonoBehaviour
 
         刀痕迹.enabled = false;
         土豆生成.enabled = false;
+
+        // 游戏开始时播放背景音乐
+        音频管理.播放("背景音乐");
+
     }
             
     public void 按钮开始游戏()
@@ -236,7 +252,7 @@ public class 土豆忍者管理类 : MonoBehaviour
 
     public void 爆炸结束游戏()
     {
-        Debug.Log($"*********  结束游戏 {游戏模式}");
+        Debug.Log($"*********  结束游戏 {游戏模式} : {生命值} ");
         if (生命值 == 3)
         {
             生命值 = 2;
@@ -257,6 +273,7 @@ public class 土豆忍者管理类 : MonoBehaviour
             生命值3.SetActive(false);
 
             if (游戏模式 == 1) {
+                游戏模式 = 0;
                 刀痕迹.enabled = false;
                 土豆生成.enabled = false;
                 土豆生成.停止生成();
@@ -272,6 +289,7 @@ public class 土豆忍者管理类 : MonoBehaviour
   
         if (游戏模式 == 2)
         {
+            游戏模式 = 0;
             刀痕迹.enabled = false;
             土豆生成.enabled = false;
             土豆生成.停止生成();
@@ -516,7 +534,7 @@ public class 土豆忍者管理类 : MonoBehaviour
     {
         StartCoroutine(等待后执行(5f, 目标函数));
     }
-
+ 
 
     private void Update()
     {

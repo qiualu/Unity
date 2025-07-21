@@ -195,6 +195,8 @@ public class 土豆类 : MonoBehaviour
     private void 鼠标切割函数(Vector2 direction, Vector2 position, Vector3 startpos)
     {
 
+        //土豆忍者管理类.土豆忍者管理.音频管理.播放("切水果");
+        土豆忍者管理类.土豆忍者管理.音频管理.播放("水果切开");
 
         爆炸分数 = 土豆忍者管理类.土豆忍者管理.连击加分;
         分数 = 爆炸分数;

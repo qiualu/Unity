@@ -160,8 +160,11 @@ public class 炸弹类 : MonoBehaviour
 
     private void 结束游戏()
     {
+         
         if (已播放动画) return;
         已播放动画 = true;
+
+        土豆忍者管理类.土豆忍者管理.音频管理.播放("爆炸音响");
 
         // 复位朝向
         transform.rotation = 原始旋转;
