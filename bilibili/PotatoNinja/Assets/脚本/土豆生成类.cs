@@ -18,7 +18,10 @@ public class 土豆生成类 : MonoBehaviour
 
     public GameObject[] 土豆组;
     public GameObject 炸弹;
-    [Range(0f, 1f)] public float 炸弹概率 = 0.05f;
+    //[Range(0f, 1f)] 
+
+    public float 炸弹概率 = 0.05f;
+
     public float 最小生成间隔 = 0.25f;
     public float 最大生成间隔 = 1f;
     public float 最小生成角度 = -15f;
@@ -44,10 +47,27 @@ public class 土豆生成类 : MonoBehaviour
     private void Awake()
     {
         生成区域 = GetComponent<Collider>();
+
+        炸弹概率 = 0.05f;
+
     }
 
     private void OnEnable()
     {
+
+        if (土豆忍者管理类.土豆忍者管理.炸弹概率 == 0)
+        {
+            炸弹概率 = 0.05f;
+            最小生成间隔 = 0.25f;
+            最大生成间隔 = 1f;
+        }
+        else {
+            炸弹概率 = 0.3f;
+            最小生成间隔 = 0.1f;
+            最大生成间隔 = 0.4f;
+        }
+
+
         开始生成();
     }
 
@@ -127,7 +147,7 @@ public class 土豆生成类 : MonoBehaviour
             }
 
             // 播放音效
-            土豆忍者管理类.土豆忍者管理.音频管理.播放("发射土豆");
+            //土豆忍者管理类.土豆忍者管理.音频管理.播放("发射土豆");
 
             yield return new WaitForSeconds(Random.Range(最小生成间隔, 最大生成间隔));
         }

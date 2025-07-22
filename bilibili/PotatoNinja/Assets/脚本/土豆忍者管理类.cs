@@ -17,6 +17,9 @@ public class 土豆忍者管理类 : MonoBehaviour
     public 音频播放器 音频管理;
 
 
+    public int 炸弹概率 =0; 
+    public int 普通模式炸弹概率 = 0; 
+    public int 计时模式炸弹概率 = 1;
 
     [SerializeField] private 刀痕迹类 刀痕迹;
     [SerializeField] private 土豆生成类 土豆生成;
@@ -42,6 +45,8 @@ public class 土豆忍者管理类 : MonoBehaviour
     public GameObject 游戏背景;
     public GameObject 结束背景;
     public GameObject 倒计时;
+
+ 
 
 
 
@@ -82,7 +87,7 @@ public class 土豆忍者管理类 : MonoBehaviour
         土豆忍者管理 = this;
         DontDestroyOnLoad(gameObject); // 可选：跨场景保留
 
-
+        炸弹概率 = 0;
 
         // 初始化音频管理器，将其挂载到当前管理类的GameObject下
         音频管理 = new 音频播放器(this.gameObject); 
@@ -111,6 +116,10 @@ public class 土豆忍者管理类 : MonoBehaviour
         生命值2.SetActive(true);
         生命值3.SetActive(true);
         生命总画面.SetActive(false);
+
+ 
+
+        
 
         倒计时.gameObject.SetActive(false);
 
@@ -147,6 +156,10 @@ public class 土豆忍者管理类 : MonoBehaviour
             连击加分 = 1;
         }
 
+        if (计分 < 0) {
+            计分 = 0; 
+        }
+
 
         分数.text = 计分.ToString();
         分数阴影.text = 计分.ToString();
@@ -175,7 +188,9 @@ public class 土豆忍者管理类 : MonoBehaviour
         爆炸白屏.gameObject.SetActive(true);
 
 
-        刀痕迹.enabled = false;
+        //刀痕迹.enabled = false;
+        刀痕迹.enabled = true;
+
         土豆生成.enabled = false;
 
         // 游戏开始时播放背景音乐
@@ -185,6 +200,8 @@ public class 土豆忍者管理类 : MonoBehaviour
             
     public void 按钮开始游戏()
     {
+      
+
         复原局部坐标();
         Debug.Log("按钮开始游戏！");
         Time.timeScale = 1f;  // 重置游戏时间流速
@@ -218,8 +235,14 @@ public class 土豆忍者管理类 : MonoBehaviour
 
 
     }
+
+ 
+
     public void 按钮开始游戏1()
     {
+        炸弹概率 = 普通模式炸弹概率;
+
+
         倒计时.gameObject.SetActive(false);
         游戏模式 = 1;
         按钮开始游戏();
@@ -228,6 +251,8 @@ public class 土豆忍者管理类 : MonoBehaviour
     }
     public void 按钮开始游戏2()
     {
+        炸弹概率 = 计时模式炸弹概率;
+
         倒计时.gameObject.SetActive(true);
         游戏模式 = 2;
         按钮开始游戏();
@@ -350,7 +375,7 @@ public class 土豆忍者管理类 : MonoBehaviour
 
 
         Debug.Log("等待后执行 5f, 要执行的函数_5秒钟恢复！");
-        StartCoroutine(等待后执行(5f, 要执行的函数_5秒钟恢复));
+        StartCoroutine(等待后执行(5f, 重新开始游戏复原初始画面));
 
         elapsed = 0f;
 
@@ -374,6 +399,8 @@ public class 土豆忍者管理类 : MonoBehaviour
 
     private IEnumerator 爆炸处理2()
     {
+
+
         Debug.Log("爆炸处理2");
         float 过渡时长 = 1.5f; // 淡入淡出总时长
         float 已用时间 = 0f;
@@ -437,7 +464,7 @@ public class 土豆忍者管理类 : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
 
         Debug.Log("等待后执行 5f, 要执行的函数_5秒钟恢复！");
-        StartCoroutine(等待后执行(5f, 要执行的函数_5秒钟恢复));
+        StartCoroutine(等待后执行(5f, 重新开始游戏复原初始画面));
 
         // 重置时间缩放
         Time.timeScale = 1f;
@@ -492,7 +519,7 @@ public class 土豆忍者管理类 : MonoBehaviour
     /// <summary>
     /// 这是要被延迟执行的示例函数
     /// </summary>
-    private void 要执行的函数_5秒钟恢复()
+    private void 重新开始游戏复原初始画面()
     {
         Debug.Log("5秒到了，执行指定操作！");
         // 在这里添加需要延迟执行的代码
@@ -506,7 +533,7 @@ public class 土豆忍者管理类 : MonoBehaviour
         开始背景.SetActive(true);
         游戏背景.SetActive(false);
         结束背景.SetActive(false);
-
+        刀痕迹.enabled = true;
     }
 
     /// <summary>

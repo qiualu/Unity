@@ -26,7 +26,9 @@ public class 土豆类 : MonoBehaviour
     private Canvas 主Canvas; // 场景中的主Canvas（用于放置预制体）
     public int 爆炸分数 = 1; // 炸弹爆炸的分数（负数表示扣分）
 
-     
+
+    public int 土豆类型 = 10;
+
 
     public int 分数 = 1;
 

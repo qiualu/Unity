@@ -9,7 +9,7 @@ public class 倒计时 : MonoBehaviour
 
     [Header("倒计时设置")]
     public int 总分钟 = 0;   // 分钟数
-    public int 总秒数 = 10;  // 秒数（总时长 = 总分钟×60 + 总秒数）
+    public int 总秒数 = 60;  // 秒数（总时长 = 总分钟×60 + 总秒数）
 
     // 倒计时结束时调用的函数
     public Action 倒计时结束后执行;
