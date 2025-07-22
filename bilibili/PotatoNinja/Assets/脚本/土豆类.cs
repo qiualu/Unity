@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,7 +29,7 @@ public class 土豆类 : MonoBehaviour
 
 
     public int 土豆类型 = 10;
-
+    public float 延迟销毁协程时间 = 3.0f;
 
     public int 分数 = 1;
 
@@ -75,7 +76,7 @@ public class 土豆类 : MonoBehaviour
     /// </summary>
     private void 显示分数提示()
     {
-         
+
 
         if (分数预制体 == null || 主Canvas == null)
         {
@@ -135,7 +136,7 @@ public class 土豆类 : MonoBehaviour
     private void 切割函数(Vector3 direction, Vector3 position, float force)
     {
 
-       
+
         土豆忍者管理类.土豆忍者管理.计分函数(分数);
 
 
@@ -199,6 +200,14 @@ public class 土豆类 : MonoBehaviour
 
         //土豆忍者管理类.土豆忍者管理.音频管理.播放("切水果");
         土豆忍者管理类.土豆忍者管理.音频管理.播放("水果切开");
+
+        if (土豆类型 < 3) {
+            触发延迟销毁();
+
+            土豆忍者管理类.土豆忍者管理.切割开始开始游戏(土豆类型);
+
+        }
+ 
 
         爆炸分数 = 土豆忍者管理类.土豆忍者管理.连击加分;
         分数 = 爆炸分数;
@@ -348,7 +357,7 @@ public class 土豆类 : MonoBehaviour
     }
 
 
- 
+
     public void 开始判定()
     {
         鼠标判定状态 = true;
@@ -404,7 +413,8 @@ public class 土豆类 : MonoBehaviour
 
     private void Update()
     {
-        if (触发状态) {
+        if (触发状态)
+        {
             if (Input.GetMouseButtonDown(0))
             {
                 开始判定();
@@ -419,13 +429,38 @@ public class 土豆类 : MonoBehaviour
             {
                 连续判定();
             }
-            else if(Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(0))
             {
                 //Debug.Log("鼠标按压状态");
                 // 只要按住鼠标就持续检测（不依赖鼠标移动事件）
                 开始判定();
             }
         }
-    } 
+    }
+
+
+
+
+    // 外部可调用的触发函数，调用后3秒销毁
+    public void 触发延迟销毁()
+    {
+        // 启动协程，延迟3秒后销毁
+        StartCoroutine(延迟销毁协程(延迟销毁协程时间));
+    }
+
+    // 延迟销毁的协程
+    private System.Collections.IEnumerator 延迟销毁协程(float 延迟时间)
+    {
+        // 等待指定的延迟时间
+        yield return new WaitForSeconds(延迟时间);
+
+        // 销毁当前对象（及所有子对象）
+        Destroy(gameObject);
+    }
+
+ 
+
+
+
 
 }

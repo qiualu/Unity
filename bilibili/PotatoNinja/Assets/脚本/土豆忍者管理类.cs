@@ -77,6 +77,27 @@ public class 土豆忍者管理类 : MonoBehaviour
     private MonoBehaviour[] 可暂停脚本;
 
 
+    // 预制体资源（从Project面板拖拽原始预制体到这里）
+    [Header("预制体资源")]
+    public GameObject 预制体资源1;
+    public GameObject 预制体资源2;
+
+    // 存储实例化后的对象
+    private GameObject 预制体实例1;
+    private GameObject 预制体实例2;
+
+    // 预制体初始位置（在Inspector面板设置）
+    [Header("初始位置设置")]
+    public Vector3 预制体1位置;
+    public Vector3 预制体2位置;
+
+    // 初始旋转（可选）
+    [Header("初始旋转设置")]
+    public Vector3 预制体1旋转 = Vector3.zero;
+    public Vector3 预制体2旋转 = Vector3.zero;
+
+    public GameObject 左上角土豆;
+
     private void Awake()
     {
         if (土豆忍者管理 != null)
@@ -108,8 +129,8 @@ public class 土豆忍者管理类 : MonoBehaviour
         游戏背景.SetActive(false);
         结束背景.SetActive(false);
 
-        开始按钮.gameObject.SetActive(true);
-        计时按钮.gameObject.SetActive(true);
+        //开始按钮.gameObject.SetActive(true);
+        //计时按钮.gameObject.SetActive(true);
         //结束按钮.gameObject.SetActive(false);
 
         生命值1.SetActive(true);
@@ -117,9 +138,10 @@ public class 土豆忍者管理类 : MonoBehaviour
         生命值3.SetActive(true);
         生命总画面.SetActive(false);
 
- 
+        左上角土豆.SetActive(false);
 
-        
+
+
 
         倒计时.gameObject.SetActive(false);
 
@@ -177,8 +199,8 @@ public class 土豆忍者管理类 : MonoBehaviour
     void Start()
     {
 
-        开始按钮.onClick.AddListener(按钮开始游戏1);
-        计时按钮.onClick.AddListener(按钮开始游戏2);
+        //开始按钮.onClick.AddListener(按钮开始游戏1);
+        //计时按钮.onClick.AddListener(按钮开始游戏2);
 
         爆炸白屏.color = Color.clear;
         // 显示对象
@@ -196,6 +218,11 @@ public class 土豆忍者管理类 : MonoBehaviour
         // 游戏开始时播放背景音乐
         音频管理.播放("背景音乐");
 
+        // 记录初始状态
+        // 记录初始状态();
+
+        // 在Start中创建两个预制体实例
+        创建预制体实例();
     }
             
     public void 按钮开始游戏()
@@ -236,7 +263,7 @@ public class 土豆忍者管理类 : MonoBehaviour
 
     }
 
- 
+    //销毁预制体
 
     public void 按钮开始游戏1()
     {
@@ -273,6 +300,33 @@ public class 土豆忍者管理类 : MonoBehaviour
     }
 
 
+    public void 切割开始开始游戏(int 切割开始模式) {
+        Debug.Log($"切割开始模式  {切割开始模式}！");
+        if (切割开始模式 == 1)
+        {
+            销毁预制体(2);
+            按钮开始游戏1();
+        }
+        else {
+            销毁预制体(1);
+            按钮开始游戏2();
+        }
+        //StartCoroutine(延迟销毁协程(3f));
+
+        左上角土豆.SetActive(true);
+    }
+
+
+    ///// <summary>
+    ///// 延迟销毁的协程实现
+    ///// </summary>
+    //private IEnumerator 延迟销毁协程(float delay)
+    //{
+    //    // 等待指定秒数（这里是3秒）
+    //    yield return new WaitForSeconds(delay);
+
+    //    重新创建预制体(0);
+    //}
 
 
     public void 爆炸结束游戏()
@@ -523,8 +577,8 @@ public class 土豆忍者管理类 : MonoBehaviour
     {
         Debug.Log("5秒到了，执行指定操作！");
         // 在这里添加需要延迟执行的代码
-        开始按钮.gameObject.SetActive(true);
-        计时按钮.gameObject.SetActive(true);
+        //开始按钮.gameObject.SetActive(true);
+        //计时按钮.gameObject.SetActive(true);
         //结束按钮.gameObject.SetActive(true);
         分数.gameObject.SetActive(false);
         分数阴影.gameObject.SetActive(false);
@@ -534,6 +588,11 @@ public class 土豆忍者管理类 : MonoBehaviour
         游戏背景.SetActive(false);
         结束背景.SetActive(false);
         刀痕迹.enabled = true;
+
+        左上角土豆.SetActive(false);
+
+        //重新开始关卡();
+        重新创建预制体(0);
     }
 
     /// <summary>
@@ -580,7 +639,132 @@ public class 土豆忍者管理类 : MonoBehaviour
 
  
     }
+    // ------------------------------------
 
+
+    /// <summary>
+    /// 创建预制体实例（初始创建或重建时调用）
+    /// </summary>
+    private void 创建预制体实例()
+    {
+        // 创建第一个预制体实例
+        if (预制体资源1 != null)
+        {
+            // 如果已有实例，先销毁
+            if (预制体实例1 != null)
+                Destroy(预制体实例1);
+
+            // 在指定位置创建新实例
+            预制体实例1 = Instantiate(
+                预制体资源1,
+                预制体1位置,
+                Quaternion.Euler(预制体1旋转)
+            );
+            预制体实例1.name = "预制体1实例"; // 重命名实例方便识别
+        }
+        else
+        {
+            Debug.LogError("请先给 预制体资源1 赋值！");
+        }
+
+        // 创建第二个预制体实例
+        if (预制体资源2 != null)
+        {
+            // 如果已有实例，先销毁
+            if (预制体实例2 != null)
+                Destroy(预制体实例2);
+
+            // 在指定位置创建新实例
+            预制体实例2 = Instantiate(
+                预制体资源2,
+                预制体2位置,
+                Quaternion.Euler(预制体2旋转)
+            );
+            预制体实例2.name = "预制体2实例"; // 重命名实例方便识别
+        }
+        else
+        {
+            Debug.LogError("请先给 预制体资源2 赋值！");
+        }
+    }
+
+    /// <summary>
+    /// 销毁指定的预制体实例
+    /// </summary>
+    /// <param name="序号">1=第一个预制体，2=第二个预制体</param>
+    public void 销毁预制体(int 序号)
+    {
+        if (序号 == 1 && 预制体实例1 != null)
+        {
+            Destroy(预制体实例1);
+            预制体实例1 = null; // 清空引用
+            Debug.Log("已销毁 预制体1实例");
+        }
+        else if (序号 == 2 && 预制体实例2 != null)
+        {
+            Destroy(预制体实例2);
+            预制体实例2 = null; // 清空引用
+            Debug.Log("已销毁 预制体2实例");
+        }
+        else
+        {
+            Debug.LogWarning("要销毁的预制体不存在！");
+        }
+    }
+
+    /// <summary>
+    /// 重新创建预制体（可指定序号或全部重建）
+    /// </summary>
+    /// <param name="序号">0=全部重建，1=重建第一个，2=重建第二个</param>
+    public void 重新创建预制体(int 序号 = 0)
+    {
+        if (序号 == 0 || 序号 == 1)
+        {
+            // 重建第一个预制体
+            if (预制体资源1 != null)
+            {
+                if (预制体实例1 != null)
+                    Destroy(预制体实例1);
+
+                预制体实例1 = Instantiate(
+                    预制体资源1,
+                    预制体1位置,
+                    Quaternion.Euler(预制体1旋转)
+                );
+                预制体实例1.name = "预制体1实例";
+                Debug.Log("已重建 预制体1实例");
+            }
+        }
+
+        if (序号 == 0 || 序号 == 2)
+        {
+            // 重建第二个预制体
+            if (预制体资源2 != null)
+            {
+                if (预制体实例2 != null)
+                    Destroy(预制体实例2);
+
+                预制体实例2 = Instantiate(
+                    预制体资源2,
+                    预制体2位置,
+                    Quaternion.Euler(预制体2旋转)
+                );
+                预制体实例2.name = "预制体2实例";
+                Debug.Log("已重建 预制体2实例");
+            }
+        }
+    }
+
+    // 示例：绑定到UI按钮的测试方法
+    public void 测试销毁第一个预制体()
+    {
+        销毁预制体(1);
+    }
+
+    public void 测试重建所有预制体()
+    {
+        重新创建预制体(0); // 0表示全部重建
+    }
 
 
 }
