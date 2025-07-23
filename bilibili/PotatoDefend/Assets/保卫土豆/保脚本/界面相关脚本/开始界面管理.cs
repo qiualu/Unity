@@ -17,6 +17,12 @@ public class 开始界面管理 : MonoBehaviour
     public float 淡入淡出时间 = 0.5f;
     public float 测试复原延迟 = 3f;
 
+
+    // 新增：地板预制体（在Inspector中拖入你的地板预制体）
+    [SerializeField] private GameObject 地板预制体;
+
+
+
     public int 游戏状态 = 0;
 
      // 当前显示的背景
@@ -28,8 +34,8 @@ public class 开始界面管理 : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Start: 开始初始化", this);
-        游戏状态 = 0;
+        //Debug.Log("Start: 开始初始化", this);
+        游戏状态 = 10;
 
         // 检查UI背景是否正确赋值且包含Image组件
         检查UI背景(背景1, "背景1");
@@ -49,7 +55,7 @@ public class 开始界面管理 : MonoBehaviour
         // 绑定按钮事件
         切换按钮.onClick.RemoveAllListeners();
         切换按钮.onClick.AddListener(开始游戏);
-        Debug.Log("Start: 按钮事件绑定完成", this);
+        //Debug.Log("Start: 按钮事件绑定完成", this);
     }
 
     // 检查UI背景是否有效（针对Image组件）
@@ -78,25 +84,23 @@ public class 开始界面管理 : MonoBehaviour
 
     private void 初始化显示()
     {
-        //强制隐藏(背景1);
-        //强制隐藏(背景2);
-        //强制隐藏(背景3);
+        强制隐藏(背景1);
+        强制隐藏(背景2);
+        强制隐藏(背景3);
         当前显示的背景 = null;
 
-        淡入淡出(背景1, false);
-        淡入淡出(背景2, false);
-        淡入淡出(背景3, false);
+        //淡入淡出(背景1, false);
+        //淡入淡出(背景2, false);
+        //淡入淡出(背景3, false);
+
+        游戏状态 = 10;
+
     }
 
     private void 开始游戏()
     {
-        Debug.Log("开始游戏：触发背景1淡入", this);
-        // 确保从隐藏状态开始淡入
-        //强制隐藏(背景2);
-        //强制隐藏(背景3);
-        淡入淡出(背景1, true);
 
-        游戏状态 = 1;
+        显示第一关();
 
     }
  
@@ -118,26 +122,75 @@ public class 开始界面管理 : MonoBehaviour
         //终止复原协程();
         // 启动新协程并保存引用
         //复原协程 = StartCoroutine(延迟复原(测试复原延迟));
+
+        //if (游戏状态 == 1) {
+            
+        //}
+
+
     }
     private void 淡入切换完成()
     {
-        Debug.Log("动画完成，启动延迟复原", this);
-        //StartCoroutine(延迟复原(测试复原延迟));
-        终止复原协程();
-        // 启动新协程并保存引用
-        复原协程 = StartCoroutine(延迟复原(测试复原延迟));
+        //Debug.Log($"动画完成，启动延迟复原  {游戏状态} " );
+        ////StartCoroutine(延迟复原(测试复原延迟));
+        //终止复原协程();
+        //// 启动新协程并保存引用
+        //复原协程 = StartCoroutine(延迟淡入(测试复原延迟));
 
-        if (游戏状态 == 1) {
-            保卫管理.实例.开始游戏(1);
-        }else if (游戏状态 == 2)
+        //Debug.Log($" 保卫管理.实例.开始游戏(游戏状态 : {游戏状态} ");
+        保卫管理.实例.开始游戏(游戏状态);
+
+    }
+
+    public void 显示第一关()
+    {
+        游戏状态 = 1;
+        //Debug.Log($" 显示第一关 ：淡入 {游戏状态} ");
+        淡入淡出(背景1, true);
+    }
+    public void 显示第二关()
+    {
+        游戏状态 = 2;
+        //Debug.Log($" 显示第二关 ：淡入 {游戏状态} ");
+        淡入淡出(背景2, true);
+        StartCoroutine(同步淡入隐藏(2));
+    }
+    public void 显示第三关()
+    {
+        游戏状态 = 3;
+        //Debug.Log($" 显示第三关 ：淡入 {游戏状态} ");
+        淡入淡出(背景3, true);
+        StartCoroutine(同步淡入隐藏(2));
+    }
+
+    public void 恢复开始界面()
+    {
+        游戏状态 = 0;
+        //Debug.Log($" 恢复开始界面 ： 淡入 {游戏状态} ");
+        淡入淡出(背景3, false);
+        StartCoroutine(同步淡入隐藏(2));
+    }
+
+    // 延迟复原
+    IEnumerator 同步淡入隐藏(float 延迟时间)
+    { 
+        yield return new WaitForSeconds(延迟时间);
+
+ 
+        if (游戏状态 == 2)
         {
-            保卫管理.实例.开始游戏(2);
+            强制隐藏(背景1);
         }
         else if (游戏状态 == 3)
         {
-            保卫管理.实例.开始游戏(3);
+            强制隐藏(背景2);
         }
-
+        else {
+            强制隐藏(背景1);
+            强制隐藏(背景2);
+            强制隐藏(背景3);
+        }
+         
 
     }
 
@@ -153,6 +206,39 @@ public class 开始界面管理 : MonoBehaviour
         }
     }
 
+    public void 淡入淡出索引(int 目标对象索引, bool 淡入状态)
+    {
+
+        GameObject 目标对象;
+        if (目标对象索引 == 1) {
+            目标对象 = 背景1;
+        }
+        else if (目标对象索引 == 2)
+        {
+            目标对象 = 背景2;
+        }
+        else 
+        {
+            目标对象 = 背景3;
+        }
+
+
+        // 针对UI Image的空检查
+        if (目标对象 == null)
+        {
+            Debug.LogError("淡入淡出目标为null", this);
+            return;
+        }
+
+        if (淡入状态)
+        {
+            淡入(目标对象, 淡入切换完成);
+        }
+        else
+        {
+            淡出(目标对象, 淡出切换完成);
+        }
+    }
 
 
     private void 淡入淡出(GameObject 目标对象, bool 淡入状态)
@@ -174,15 +260,21 @@ public class 开始界面管理 : MonoBehaviour
         }
     }
 
+
+
+
     // 切换到下一个背景（针对UI的逻辑）
     public void 切换到下一个背景索引(int 当前索引, int 淡入对象索引)
     {
-        GameObject 当前;
-        GameObject 淡入对象;
+        GameObject 当前 = null;
+        GameObject 淡入对象 = null;
 
-        if (当前索引 == 1) {
+        // 确定当前背景
+        if (当前索引 == 1)
+        {
             当前 = 背景1;
-        }else if (当前索引 == 2)
+        }
+        else if (当前索引 == 2)
         {
             当前 = 背景2;
         }
@@ -190,6 +282,13 @@ public class 开始界面管理 : MonoBehaviour
         {
             当前 = 背景3;
         }
+        else
+        {
+            Debug.LogError("无效的当前索引: " + 当前索引, this);
+            return; // 如果索引无效，直接返回
+        }
+
+        // 确定要淡入的背景
         if (淡入对象索引 == 1)
         {
             淡入对象 = 背景1;
@@ -202,8 +301,13 @@ public class 开始界面管理 : MonoBehaviour
         {
             淡入对象 = 背景3;
         }
+        else
+        {
+            Debug.LogError("无效的淡入对象索引: " + 淡入对象索引, this);
+            return; // 如果索引无效，直接返回
+        }
 
-
+        // 检查是否正在切换或对象为空
         if (正在切换 || 当前 == null || 淡入对象 == null) return;
         正在切换 = true;
 
@@ -255,7 +359,7 @@ public class 开始界面管理 : MonoBehaviour
                  .SetEase(Ease.Linear) // UI动画建议用线性缓动
                  .OnComplete(() =>
                  {
-                     Debug.Log($"{目标对象.name}淡入完成", 目标对象);
+                     //Debug.Log($"{目标对象.name}淡入完成", 目标对象);
                      完成后执行?.Invoke();
                  });
     }
@@ -277,7 +381,7 @@ public class 开始界面管理 : MonoBehaviour
                  .OnComplete(() =>
                  {
                      目标对象.SetActive(false); // 淡出后隐藏
-                     Debug.Log($"{目标对象.name}淡出完成", 目标对象);
+                     //Debug.Log($"{目标对象.name}淡出完成", 目标对象);
                      完成后执行?.Invoke();
                  });
     }
@@ -328,4 +432,8 @@ public class 开始界面管理 : MonoBehaviour
         }
         目标对象.SetActive(false);
     }
+
+ 
+
+
 }

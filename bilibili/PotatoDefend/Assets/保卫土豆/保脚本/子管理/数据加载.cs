@@ -137,7 +137,7 @@ public class 数据加载
                 using (StreamReader 流读取器 = new StreamReader(文件路径))
                 {
                     string json字符串 = 流读取器.ReadToEnd();
-                    Debug.Log("加载的JSON内容: " + json字符串.Substring(0, Mathf.Min(200, json字符串.Length)) + "...");
+                    //Debug.Log("加载的JSON内容: " + json字符串.Substring(0, Mathf.Min(200, json字符串.Length)) + "...");
 
                     // 直接解析为Dictionary，再转换为我们的容器类
                     var 解析结果 = JsonMapper.ToObject<Dictionary<string, 关卡数据类>>(json字符串);
@@ -150,7 +150,7 @@ public class 数据加载
                             所有关卡容器.添加或更新关卡(键值对.Key, 键值对.Value);
                         }
 
-                        Debug.Log($"成功加载 {所有关卡容器.数量()} 个关卡");
+                        //Debug.Log($"成功加载 {所有关卡容器.数量()} 个关卡");
 
                         // 安全获取第一个关卡名
                         if (所有关卡容器.数量() > 0)
@@ -164,7 +164,7 @@ public class 数据加载
                         {
                             if (所有关卡容器.尝试获取关卡(关卡名, out var 关卡数据))
                             {
-                                Debug.Log($"找到关卡: {关卡名} - {关卡数据.名字}");
+                                //Debug.Log($"找到关卡: {关卡名} - {关卡数据.名字}");
                             }
                             else
                             {
@@ -216,7 +216,7 @@ public class 数据加载
         {
             当前关卡名 = 关卡名;
             当前关卡数据 = 关卡数据;
-            Debug.Log($"已切换到关卡: {关卡名} ({当前关卡数据.名字})");
+            //Debug.Log($"已切换到关卡: {关卡名} ({当前关卡数据.名字})");
         }
         else
         {
