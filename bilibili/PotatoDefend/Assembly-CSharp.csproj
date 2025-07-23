@@ -108,6 +108,7 @@
     <Compile Include="Assets\脚本\场景\Boss游戏选项场景状态.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UI\Heart.cs" />
     <Compile Include="Assets\脚本\界面\界面\画布持久化场景转移.cs" />
+    <Compile Include="Assets\保卫土豆\保脚本\界面相关脚本\界面管理.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UIPanel\MainPanel.cs" />
     <Compile Include="Assets\脚本\保卫萝卜开始管理.cs" />
     <Compile Include="Assets\脚本\管理\游戏对象管理\音频源管理器.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Assets\CarrotFantasy\Scripts\Game\Tower\Star.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\Scene\BossModelSceneState.cs" />
     <Compile Include="Assets\脚本\管理\所有定义汇总.cs" />
+    <Compile Include="Assets\保卫土豆\保脚本\动画\自动缩放管理器.cs" />
     <Compile Include="Assets\脚本\工厂\精灵工厂.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UIPanel\BossModelPanel.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\Factory\RuntimeAnimatorControllerFactory.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Assets\CarrotFantasy\Scripts\UI\UIPanel\GameBossOptionPanel.cs" />
     <Compile Include="Assets\脚本\工厂\泛型资源工厂接口.cs" />
     <Compile Include="Assets\脚本\制作界面脚本\备份\地板鼠标交互类2.cs" />
+    <Compile Include="Assets\保卫土豆\保脚本\界面相关脚本\开始界面管理.cs" />
     <Compile Include="Assets\脚本\脚本知识.cs" />
     <Compile Include="Assets\脚本\游戏\关卡.cs" />
     <Compile Include="Assets\CarrotFantasy\Scripts\Factory\SpriteFactory.cs" />
