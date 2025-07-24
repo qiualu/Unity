@@ -321,8 +321,7 @@ public class 关卡加载类 : MonoBehaviour
             {
                 输出所有点击位置的宽高();
                 printpp = 1;
-
-
+                 
                 //地板id
             }
         }

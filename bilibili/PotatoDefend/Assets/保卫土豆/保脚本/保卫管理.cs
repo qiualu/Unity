@@ -9,10 +9,18 @@ public class 保卫管理 : MonoBehaviour
 
     public bool 是否重置玩家数据;//是否重置游戏  // public bool initPlayerManager;//是否重置游戏
 
-    public 数据加载 数据加载实例;
+
+    public bool 是否暂停 = false;
+    public int 游戏状态 = 1; // 保卫管理.实例.游戏状态
+    public float 游戏速度 = 1.0f;
+    // 集火目标：存储玩家当前指定的攻击目标（怪物或道具）
+    [HideInInspector] public Transform 目标位置;
+
+
 
     public 开始界面管理 界面实例;
- 
+
+    //public 铺设地板 铺设地板实例;  铺设地板.铺设地板实例
 
 
     public static 保卫管理 实例     // public static GameManager Instance
@@ -30,14 +38,7 @@ public class 保卫管理 : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         _实例 = this;  // _instance = this;
 
-        数据加载实例 = new 数据加载();
-        //数据加载实例 = 数据加载();
-        数据加载实例.读取数据();
-
-        //界面实例 = new 开始界面管理();
-        // 重要：不要用new创建MonoBehaviour对象
-        // 方法1：在Inspector面板中拖拽场景中的开始界面管理对象到这个字段
-        // 方法2：如果场景中只有一个开始界面管理，可以这样查找
+      
         if (界面实例 == null)
         {
             界面实例 = FindObjectOfType<开始界面管理>();
@@ -47,12 +48,14 @@ public class 保卫管理 : MonoBehaviour
             }
         }
 
+ 
+
     }
 
     public void 开始游戏(int 游戏状态) {
         // 
         Debug.Log($"****保卫管理*******开始游戏: 触发开始游戏 {游戏状态}   {界面实例.游戏状态}    ");
-        StartCoroutine(延迟复原(3));
+        StartCoroutine(延迟复原(1));
 
 
     }
@@ -63,50 +66,19 @@ public class 保卫管理 : MonoBehaviour
         //Debug.Log($"开始 触发，延迟{延迟时间}秒");
         yield return new WaitForSeconds(延迟时间);
 
-        //Debug.Log($"  | 延迟复原 | 当前游戏状态 ***  触发，  {界面实例.游戏状态} ");
+ 
 
-        //if (界面实例.游戏状态 == 1)
-        //{
-        //    界面实例.显示第二关();
-        //}
-        //else if (界面实例.游戏状态 == 2)
-        //{
-        //    界面实例.显示第三关();
-        //}
-        //else if(界面实例.游戏状态 == 3)
-        //{
-        //    界面实例.恢复开始界面();
-        //}
+        Debug.Log($"  | 执行铺设地板 Start | ");
+        铺设地板.铺设地板实例.关卡加载();
+        铺设地板.铺设地板实例.铺设一个测试版本();
 
-        //Debug.Log($"  | 延迟复原 End | ");
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log($" **  保存数据 Start {数据加载实例}");
-        //Debug.Log($" 数据加载实例 {数据加载实例.关卡数据.名字}");
-
-        //if (数据加载实例 != null && 数据加载实例.当前关卡数据 != null)
-        //{
-        //    Debug.Log($" 数据加载实例 {数据加载实例.当前关卡数据.名字}");
-
-        //    数据加载实例.切换到关卡("关卡1");
-        //    Debug.Log($" 数据加载实例 {数据加载实例.当前关卡数据.名字}");
-        //    数据加载实例.切换到关卡("关卡2");
-        //    Debug.Log($" 数据加载实例 {数据加载实例.当前关卡数据.名字}");
-        //    数据加载实例.切换到关卡("关卡3");
-        //    Debug.Log($" 数据加载实例 {数据加载实例.当前关卡数据.名字}");
- 
-        //}
-        //else
-        //{
-        //    Debug.LogError("数据加载实例或关卡数据为空");
-        //}
-
-         
-
+   
     }
 
     // Update is called once per frame
@@ -115,3 +87,5 @@ public class 保卫管理 : MonoBehaviour
         
     }
 }
+
+

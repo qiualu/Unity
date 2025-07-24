@@ -18,9 +18,7 @@ public class 开始界面管理 : MonoBehaviour
     public float 测试复原延迟 = 3f;
 
 
-    // 新增：地板预制体（在Inspector中拖入你的地板预制体）
-    [SerializeField] private GameObject 地板预制体;
-
+ 
 
 
     public int 游戏状态 = 0;
